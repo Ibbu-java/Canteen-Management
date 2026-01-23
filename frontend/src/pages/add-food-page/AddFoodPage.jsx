@@ -21,7 +21,16 @@ const AddFoodPage = ({ isAuthenticated, loading, addFoodItem, history }) => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    addFoodItem(formData, history);
+    // Send as JSON object instead of FormData
+    const foodData = {
+      foodType,
+      name,
+      price,
+      quantity,
+      image,
+    };
+
+    addFoodItem(foodData, history);
   };
 
   return (
@@ -66,10 +75,10 @@ const AddFoodPage = ({ isAuthenticated, loading, addFoodItem, history }) => {
             </select>
             <br />
             <input
-              type="url"
+              type="text"
               name="image"
               className="input"
-              placeholder="Image URL"
+              placeholder="Image URL (e.g., https://example.com/image.jpg)"
               value={image}
               onChange={onChange}
             />

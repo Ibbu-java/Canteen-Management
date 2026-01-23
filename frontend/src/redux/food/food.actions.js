@@ -18,7 +18,7 @@ import {
 } from "./food.types";
 import { setAlert } from "../alert/alert.actions";
 
-export const addFoodItem = (formData, history) => async (dispatch) => {
+export const addFoodItem = (foodData, history) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -27,19 +27,19 @@ export const addFoodItem = (formData, history) => async (dispatch) => {
   try {
     dispatch({ type: ADD_FOOD_REQUEST });
 
-    const { data } = await axios.post("/add", formData, config);
+    const { data } = await axios.post("/add", foodData, config);
 
     dispatch({ type: ADD_FOOD_SUCCESS, payload: data });
     dispatch(setAlert("Added food successfully", "success"));
 
     history.push("/");
   } catch (error) {
-    const errors = error.response.data.errors;
+    const errors = error.response?.data?.errors;
 
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
     }
-    if (error.response.data.msg) {
+    if (error.response?.data?.msg) {
       dispatch(setAlert(error.response.data.msg, "danger"));
     }
     dispatch({ type: ADD_FOOD_FAIL, payload: error.message });
@@ -71,7 +71,7 @@ export const getSingleFoodItem = (id) => async (dispatch) => {
   }
 };
 
-export const editFoodItem = (formData, id, history) => async (dispatch) => {
+export const editFoodItem = (foodData, id, history) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -79,19 +79,19 @@ export const editFoodItem = (formData, id, history) => async (dispatch) => {
   };
   try {
     dispatch({ type: EDIT_FOOD_ITEM_REQUEST });
-    const { data } = await axios.put(`/edit/${id}`, formData, config);
+    const { data } = await axios.put(`/edit/${id}`, foodData, config);
     dispatch({ type: EDIT_FOOD_ITEM_SUCCESS, payload: data });
     dispatch(setAlert("Edit food done", "success"));
 
     history.push("/");
   } catch (error) {
     console.log(error);
-    const errors = error.response.data.errors;
+    const errors = error.response?.data?.errors;
 
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
     }
-    if (error.response.data.msg) {
+    if (error.response?.data?.msg) {
       dispatch(setAlert(error.response.data.msg, "danger"));
     }
     dispatch({ type: EDIT_FOOD_ITEM_FAIL, payload: error.message });

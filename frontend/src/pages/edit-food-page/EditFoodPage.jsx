@@ -33,14 +33,15 @@ const AddFoodPage = ({
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const formData = {
+    // Send as JSON object instead of FormData
+    const foodData = {
       foodType,
       name,
       price,
       quantity,
       image,
     };
-    editFoodItem(formData, match.params.id, history);
+    editFoodItem(foodData, match.params.id, history);
   };
 
   return (
@@ -91,10 +92,10 @@ const AddFoodPage = ({
             </select>
             <br />
             <input
-              type="url"
+              type="text"
               name="image"
               className="input"
-              placeholder="Image URL"
+              placeholder="Image URL (e.g., https://example.com/image.jpg)"
               value={image}
               onChange={(e) => setImage(e.target.value)}
             />
@@ -105,7 +106,7 @@ const AddFoodPage = ({
         <div>
           <img
             alt="img"
-            src={image}
+            src={image || "https://wallpaperaccess.com/full/1285990.jpg"}
           />
         </div>
       </div>

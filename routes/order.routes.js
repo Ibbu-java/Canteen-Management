@@ -17,7 +17,7 @@ router.get("/orders", auth, async (req, res) => {
       return res.status(401).json({ msg: "You can't access this route" });
     }
   } catch (err) {
-    console.error(error.message);
+    console.error(err.message);
     res.status(500).send("Server Error");
   }
 });
