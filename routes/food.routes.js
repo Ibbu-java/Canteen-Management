@@ -34,7 +34,7 @@ router.post(
           name,
           price,
           quantity,
-          image,
+          image: image, // Direct image URL from request body
         });
         await food.save();
         res.json({ msg: "Added item successfully", food });
@@ -71,7 +71,7 @@ router.put("/edit/:id", auth, async (req, res) => {
       const name = req.body.name ? req.body.name : food.name;
       const price = req.body.price ? req.body.price : food.price;
       const quantity = req.body.quantity ? req.body.quantity : food.quantity;
-      const image = req.body.image ? req.body.image : food.image;
+      const image = req.body.image ? req.body.image : food.image; // Direct image URL from request body
 
       food = await Food.findByIdAndUpdate(
         req.params.id,
@@ -110,7 +110,7 @@ router.get("/search/:food", auth, async (req, res) => {
     });
     res.json({ data: food });
   } catch (error) {
-    res.status(500).json(errpr.message);
+    res.status(500).json(error.message);
   }
 });
 

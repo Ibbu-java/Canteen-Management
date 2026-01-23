@@ -1,20 +1,9 @@
-const multer = require("multer");
-const cloudinary = require("cloudinary").v2;
-const { CloudinaryStorage } = require("multer-storage-cloudinary");
+// Simple middleware - no file upload needed, just pass through
+// Image URLs are now accepted directly in the request body
+const passThrough = (req, res, next) => {
+  // No file upload processing needed
+  // Image URL will come from req.body.image
+  next();
+};
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: "canteen",
-  },
-});
-
-const upload = multer({ storage }).single("image");
-
-module.exports = upload;
+module.exports = passThrough;
