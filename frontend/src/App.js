@@ -31,7 +31,7 @@ function App() {
         <Navbar />
         <Alert />
         <Switch>
-          <PrivateRoute exact path="/" component={Homepage} />
+          <Route exact path="/" component={Homepage} />
           <Route exact path="/signin" component={SignInPage} />
           <Route exact path="/signup" component={SignUpPage} />
           <AdminRoute exact path="/add-food" component={AddFoodPage} />

@@ -4,7 +4,7 @@ import Loader from "../../components/loader/Loader";
 import { editFoodItem, getSingleFoodItem } from "../../redux/food/food.actions";
 import "./EditFoodPage.css";
 
-const AddFoodPage = ({
+const EditFoodPage = ({
   isAuthenticated,
   loading,
   getSingleFoodItem,
@@ -14,34 +14,48 @@ const AddFoodPage = ({
   editFoodItem,
 }) => {
   const [foodType, setFoodType] = useState("");
-
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
-
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState("");
 
   useEffect(() => {
-    getSingleFoodItem(match.params.id);
-    setFoodType(food?.foodType);
-    setName(food?.name);
-    setPrice(food?.price);
-    setQuantity(food?.quantity);
-    setImage(food?.image);
+    if (!food || food._id !== match.params.id) {
+       getSingleFoodItem(match.params.id);
+    } else {
+      setFoodType(food.foodType || "");
+      setName(food.name || "");
+      setPrice(food.price || "");
+      setQuantity(food.quantity || "");
+      setImagePreview(food.image || "");
+    }
   }, [getSingleFoodItem, match, food]);
+
+  const onImageChange = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+    if (file) {
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    // Send as JSON object instead of FormData
-    const foodData = {
-      foodType,
-      name,
-      price,
-      quantity,
-      image,
-    };
-    editFoodItem(foodData, match.params.id, history);
+    const data = new FormData();
+    data.append("foodType", foodType);
+    data.append("name", name);
+    data.append("price", price);
+    data.append("quantity", quantity);
+    
+    if (image) {
+      data.append("image", image);
+    } else {
+      data.append("image", imagePreview);
+    }
+
+    editFoodItem(data, match.params.id, history);
   };
 
   return (
@@ -84,20 +98,22 @@ const AddFoodPage = ({
               value={foodType}
               onChange={(e) => setFoodType(e.target.value)}
             >
-              <option value="null">Cateogry </option>
+              <option value="null">Category </option>
               <option value="breakfast">Breakfast</option>
               <option value="indian">Indian</option>
               <option value="chinese">Chinese</option>
               <option value="chat">Chat</option>
+              <option value="beverages">Beverages</option>
             </select>
             <br />
+            <label style={{ display: 'block', margin: '10px 0', fontSize: '17px' }}>Food Image:</label>
             <input
-              type="text"
+              type="file"
               name="image"
+              accept="image/*"
               className="input"
-              placeholder="Image URL (e.g., https://example.com/image.jpg)"
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
+              style={{ paddingTop: '10px' }}
+              onChange={onImageChange}
             />
             <br />
             <button>Submit</button>
@@ -106,7 +122,7 @@ const AddFoodPage = ({
         <div>
           <img
             alt="img"
-            src={image || "https://wallpaperaccess.com/full/1285990.jpg"}
+            src={imagePreview || "https://wallpaperaccess.com/full/1285990.jpg"}
           />
         </div>
       </div>
@@ -121,5 +137,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { getSingleFoodItem, editFoodItem })(
-  AddFoodPage
+  EditFoodPage
 );

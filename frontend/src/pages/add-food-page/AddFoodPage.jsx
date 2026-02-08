@@ -9,28 +9,37 @@ const AddFoodPage = ({ isAuthenticated, loading, addFoodItem, history }) => {
     name: "",
     price: "",
     quantity: "",
-    image: "",
+    image: null,
   });
+  const [imagePreview, setImagePreview] = useState("");
 
   const onChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.name === "image") {
+      const file = e.target.files[0];
+      setFormData({ ...formData, image: file });
+      if (file) {
+        setImagePreview(URL.createObjectURL(file));
+      }
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
 
-  const { name, price, foodType, quantity, image } = formData;
+  const { name, price, foodType, quantity } = formData;
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    // Send as JSON object instead of FormData
-    const foodData = {
-      foodType,
-      name,
-      price,
-      quantity,
-      image,
-    };
+    const data = new FormData();
+    data.append("name", name);
+    data.append("price", price);
+    data.append("foodType", foodType);
+    data.append("quantity", quantity);
+    if (formData.image) {
+      data.append("image", formData.image);
+    }
 
-    addFoodItem(foodData, history);
+    addFoodItem(data, history);
   };
 
   return (
@@ -67,19 +76,21 @@ const AddFoodPage = ({ isAuthenticated, loading, addFoodItem, history }) => {
             />
             <br />
             <select name="foodType" value={foodType} onChange={onChange}>
-              <option value="null">Cateogry </option>
+              <option value="null">Category </option>
               <option value="breakfast">Breakfast</option>
               <option value="indian">Indian</option>
               <option value="chinese">Chinese</option>
               <option value="chat">Chat</option>
+              <option value="beverages">Beverages</option>
             </select>
             <br />
+            <label style={{ display: 'block', margin: '10px 0', fontSize: '17px' }}>Food Image:</label>
             <input
-              type="text"
+              type="file"
               name="image"
+              accept="image/*"
               className="input"
-              placeholder="Image URL (e.g., https://example.com/image.jpg)"
-              value={image}
+              style={{ paddingTop: '10px' }}
               onChange={onChange}
             />
             <br />
@@ -90,8 +101,8 @@ const AddFoodPage = ({ isAuthenticated, loading, addFoodItem, history }) => {
           <img
             alt="img"
             src={
-              image
-                ? image
+              imagePreview
+                ? imagePreview
                 : "https://wallpaperaccess.com/full/1285990.jpg"
             }
           />

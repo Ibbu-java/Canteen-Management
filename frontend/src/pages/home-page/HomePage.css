@@ -87,6 +87,7 @@
   height: 150px;
   width: 150px;
   transform: translateY(-50%) translateX(-60%);
+  object-fit: contain;
 }
 
 .dosa {

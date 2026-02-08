@@ -26,6 +26,11 @@ const CartPage = ({
   const onSubmit = (e) => {
     e.preventDefault();
 
+    if ((user?.role === "teacher" || user?.role === "student") && !roomNo.trim()) {
+      alert("Please enter your Room No to place the order.");
+      return;
+    }
+
     const orderDetails = {
       cart: cartItems.map((item) => ({
         name: item.name,
@@ -85,12 +90,13 @@ const CartPage = ({
               </tr>
             ))}
 
-            {user?.role === "teacher" && (
+            {(user?.role === "teacher" || user?.role === "student") && (
               <div className="teacher">
                 <h2>If you want delivery at your place</h2>
                 <input
                   type="text"
                   name="roomNo"
+                  required
                   value={roomNo}
                   placeholder="Room No"
                   onChange={(e) => setRoomNo(e.target.value)}

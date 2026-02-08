@@ -7,10 +7,7 @@ const Footer = () => {
       <div className="about">
         <h2>About Policy</h2>
         <p>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled
+          The Campus Canteen policy focuses on providing efficient, secure, and reliable management of canteen operations. It ensures proper handling of orders, payments, and user data while reducing manual effort and errors. Access to system data is restricted to authorized users to maintain accuracy and transparency.
         </p>
       </div>
       {/* <div className="header">
@@ -30,11 +27,10 @@ const Footer = () => {
       <div className="contact-us">
         <h2>Contact Us</h2>
         <p>
-          <b>Address:</b> Z-302, Some Random Street, Some Random City, Some
-          Random Country, 0000000{" "}
+          <b>Address:</b> SIES College of Management Studies,Nerul East, Navi Mumbai - 400706{" "}
         </p>
         <p>
-          <b>Phone No:</b> 101010101
+          <b>Phone No:</b> +91 9826000000
         </p>
       </div>
     </div>

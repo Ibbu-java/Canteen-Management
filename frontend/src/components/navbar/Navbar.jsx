@@ -47,11 +47,11 @@ const Navbar = ({
         Add Item
       </Link>
       <Link to="/dashboard" className="link">
-        Dashboard
+        Orders
       </Link>
-      <Link className="link btn" onClick={() => logoutUser()}>
+      <button className="link btn" onClick={() => logoutUser()}>
         Logout
-      </Link>
+      </button>
     </div>
   );
   return (

@@ -7,6 +7,10 @@ import "./AdminDashboard.css";
 const AdminDashboard = ({ getAdminORders, orders }) => {
   useEffect(() => {
     getAdminORders();
+    const interval = setInterval(() => {
+      getAdminORders();
+    }, 120000); // 2 minutes
+    return () => clearInterval(interval);
   }, [getAdminORders]);
   return (
     <div>

@@ -28,12 +28,16 @@ const Dashboard = ({ getAdminORders, user, loading }) => {
             </p>
             <p>
               <b>Role: </b>
-              {user?.role}
+              {["Administration", "Library"].some(b => b.toLowerCase() === user?.branch?.trim()?.toLowerCase())
+                ? user?.branch
+                : user?.role}
             </p>
           </div>
         </div>
         <div>
-          <h1 className="dashboard-text">Dashboard</h1>
+          <h1 className="dashboard-text">
+            {user?.isAdmin ? "Orders" : "Dashboard"}
+          </h1>
           {user?.isAdmin ? <AdminDashboard /> : <UserDashboard />}
         </div>
       </div>

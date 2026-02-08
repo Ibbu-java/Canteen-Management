@@ -1,12 +1,17 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const connectDB = require("./config/db");
 const path = require("path");
+const dns = require("node:dns");
+
+// Force IPv4 to avoid ETIMEDOUT errors on some networks with Node 17+
+if (dns.setDefaultResultOrder) {
+  dns.setDefaultResultOrder('ipv4first');
+}
 
 require("dotenv").config();
 
-connectDB();
+// connectDB();
 app.use(express.json({ extended: false }));
 
 app.use(cors());
@@ -14,6 +19,7 @@ app.use(cors());
 app.use(require("./routes/auth.routes"));
 app.use(require("./routes/food.routes"));
 app.use(require("./routes/order.routes"));
+app.use(require("./routes/payment.routes"));
 
 const PORT = process.env.PORT || 5000;
 

@@ -7,6 +7,10 @@ import "./UserDashboard.css";
 const UserDashboard = ({ getMyOrders, orders }) => {
   useEffect(() => {
     getMyOrders();
+    const interval = setInterval(() => {
+      getMyOrders();
+    }, 120000); // 2 minutes
+    return () => clearInterval(interval);
   }, [getMyOrders]);
 
   console.log(orders);

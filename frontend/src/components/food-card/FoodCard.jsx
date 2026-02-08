@@ -9,16 +9,15 @@ const FoodCard = ({ food, AddToCart, user, deleteFoodItem }) => {
   return (
     <div className="food-card" key={food?._id}>
       <img alt={food?.name} src={food?.image} />
+      <div className="food-headers">
+        <p className="name">{food?.name}</p>
+        <p className="price"> ₹{food?.price}</p>
+      </div>
       {!user?.isAdmin && (
         <button className="food-card-button" onClick={() => AddToCart(food)}>
           Add to cart
         </button>
       )}
-
-      <div className="food-headers">
-        <p className="name">{food?.name}</p>
-        <p className="price"> ₹{food?.price}</p>
-      </div>
       <p className="quantity">Quantity: {food?.quantity}</p>
       {user?.isAdmin && (
         <div className="admin-buttons">

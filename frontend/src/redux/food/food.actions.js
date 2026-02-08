@@ -19,15 +19,11 @@ import {
 import { setAlert } from "../alert/alert.actions";
 
 export const addFoodItem = (foodData, history) => async (dispatch) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
   try {
     dispatch({ type: ADD_FOOD_REQUEST });
 
-    const { data } = await axios.post("/add", foodData, config);
+    // Axios automatically sets Content-Type to multipart/form-data when data is FormData
+    const { data } = await axios.post("/add", foodData);
 
     dispatch({ type: ADD_FOOD_SUCCESS, payload: data });
     dispatch(setAlert("Added food successfully", "success"));
@@ -72,14 +68,12 @@ export const getSingleFoodItem = (id) => async (dispatch) => {
 };
 
 export const editFoodItem = (foodData, id, history) => async (dispatch) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
   try {
     dispatch({ type: EDIT_FOOD_ITEM_REQUEST });
-    const { data } = await axios.put(`/edit/${id}`, foodData, config);
+    
+    // Axios automatically sets Content-Type to multipart/form-data when data is FormData
+    const { data } = await axios.put(`/edit/${id}`, foodData);
+    
     dispatch({ type: EDIT_FOOD_ITEM_SUCCESS, payload: data });
     dispatch(setAlert("Edit food done", "success"));
 
@@ -102,19 +96,13 @@ export const deleteFoodItem = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_FOOD_ITEM_REQUEST });
     await axios.delete(`/delete/${id}`);
+
     dispatch({ type: DELETE_FOOD_ITEM_SUCCESS, payload: id });
-    dispatch(setAlert("Deleted food item successfully", "success"));
+    dispatch(setAlert("Item deleted successfully", "success"));
   } catch (error) {
-    console.log(error);
-    const errors = error.response.data.errors;
-
-    if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
-    }
-    if (error.response.data.msg) {
-      dispatch(setAlert(error.response.data.msg, "danger"));
-    }
-
     dispatch({ type: DELETE_FOOD_ITEM_FAIL, payload: error.message });
+    if (error.response?.data?.msg) {
+        dispatch(setAlert(error.response.data.msg, "danger"));
+    }
   }
 };

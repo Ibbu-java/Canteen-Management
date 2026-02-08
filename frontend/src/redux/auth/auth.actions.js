@@ -61,12 +61,12 @@ export const registerUser = (formData) => async (dispatch) => {
     dispatch(loadUser());
   } catch (err) {
     // Send alerts
-    const errors = err.response.data.errors;
+    const errors = err.response?.data?.errors;
     console.log(err);
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
     }
-    if (err.response.data.msg) {
+    if (err.response?.data?.msg) {
       dispatch(setAlert(err.response.data.msg, "danger"));
     }
 
@@ -103,11 +103,11 @@ export const loginUser = (formData) => async (dispatch) => {
     dispatch(setAlert("Signed In  successfully", "success"));
   } catch (err) {
     // Send alerts
-    const errors = err.response && err.response.data.errors;
+    const errors = err.response?.data?.errors;
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
     }
-    if (err.response.data.msg) {
+    if (err.response?.data?.msg) {
       dispatch(setAlert(err.response.data.msg, "danger"));
     }
 

@@ -1,12 +1,24 @@
 .order-card {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  min-height: 400px;
   border-radius: 10px;
   padding: 10px;
+  height: fit-content;
 }
 
 .order-card h3 {
   color: #ff2a2a;
+  margin: 5px 0;
+  font-size: 1.1em;
+}
+
+.order-card h4 {
+  margin: 8px 0 4px 0;
+  font-size: 1em;
+}
+
+.order-card p {
+  margin: 4px 0;
+  font-size: 0.9em;
 }
 
 .order-card img {
@@ -77,6 +89,7 @@
   border: none;
   background-color: #ff2a2a;
   color: white;
+  border: none;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -90,4 +103,90 @@
   color: white;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.invoice-btn {
+  margin-top: 8px;
+  padding: 6px 15px;
+  font-size: 13px;
+  border: 1px solid #333;
+  background-color: #fff;
+  color: #333;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.feedback-form {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.feedback-input {
+  width: 95%;
+  padding: 6px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  min-height: 50px;
+  font-family: inherit;
+  font-size: 0.9em;
+}
+
+.submit-feedback-btn {
+  padding: 6px 12px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  align-self: flex-start;
+  font-size: 0.9em;
+}
+
+.submit-feedback-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.feedback-section {
+  margin-top: 8px;
+  padding: 8px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  border: 1px solid #eee;
+}
+
+.rejection-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.cancel-btn {
+  padding: 6px 12px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.rejection-info {
+  margin-top: 8px;
+  padding: 8px;
+  background-color: #fff5f5;
+  border: 1px solid #ffc9c9;
+  border-radius: 5px;
+}
+
+.rejection-reason {
+  color: #dc3545;
+  margin-bottom: 4px;
+  font-size: 0.9em;
+}
+
+.support-info {
+  font-size: 0.85em;
+  color: #666;
 }

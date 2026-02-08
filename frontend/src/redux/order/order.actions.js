@@ -18,8 +18,12 @@ import {
   SET_PAYMENT_STATUS_SUCCESS,
   SET_PAYMENT_STATUS_REQUEST,
   SET_PAYMENT_STATUS_FAIL,
+  SUBMIT_FEEDBACK_REQUEST,
+  SUBMIT_FEEDBACK_SUCCESS,
+  SUBMIT_FEEDBACK_FAIL,
 } from "./order.types";
 import { setAlert } from "../alert/alert.actions";
+import { clearCart } from "../cart/cart.actions";
 
 export const placeOrder = (formData, history) => async (dispatch) => {
   try {
@@ -28,17 +32,18 @@ export const placeOrder = (formData, history) => async (dispatch) => {
     const { data } = await axios.post("/place/order", formData);
 
     dispatch({ type: PLACE_ORDER_SUCCESS, data: data });
+    dispatch(clearCart());
     dispatch(setAlert("Placed order successfully", "success"));
 
     history.push("/dashboard");
   } catch (error) {
     console.log(error);
-    const errors = error.response.data.errors;
+    const errors = error.response?.data?.errors;
 
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
     }
-    if (error.response.data.msg) {
+    if (error.response?.data?.msg) {
       dispatch(setAlert(error.response.data.msg, "danger"));
     }
 
@@ -59,20 +64,21 @@ export const getAdminORders = () => async (dispatch) => {
   }
 };
 
-export const confirmOrder = (id, isConfirmed, history) => async (dispatch) => {
+export const confirmOrder = (id, isConfirmed, history, rejectionReason) => async (dispatch) => {
   try {
     dispatch({ type: CONFIRM_ORDER_REQUEST });
 
     const { data } = await axios.put(`/orders/${id}`, {
       isConfirmed,
+      rejectionReason
     });
     dispatch({
-      type: CONFIRM_ORDER_SUCCESS,
-      payload: { data, id, isConfirmed },
-    });
-    window.location.reload();
-    history.push("/dashboard");
-  } catch (error) {
+        type: CONFIRM_ORDER_SUCCESS,
+        payload: { data, id, isConfirmed, rejectionReason },
+      });
+      // window.location.reload();
+      // history.push("/dashboard");
+    } catch (error) {
     const errors = error.response && error.response.data.errors;
 
     if (errors) {
@@ -111,8 +117,8 @@ export const setpaymentType =
         type: SET_PAYMENT_TYPE_SUCCESS,
         payload: { data, id, paymentType },
       });
-      window.location.reload();
-      history.push("/dashboard");
+      // window.location.reload();
+      // history.push("/dashboard");
     } catch (error) {
       dispatch({ type: SET_PAYMENT_TYPE_FAIL, payload: error });
       console.log(error);
@@ -126,10 +132,24 @@ export const setpaymentStatus = (id, history) => async (dispatch) => {
     const { data } = await axios.put(`/payment-status/${id}`);
     dispatch({ type: SET_PAYMENT_STATUS_SUCCESS, payload: { data, id } });
     dispatch(setAlert("Payment done", "success"));
-    window.location.reload();
-    history.push("/dashboard");
+    // window.location.reload();
+    // history.push("/dashboard");
   } catch (error) {
     dispatch({ type: SET_PAYMENT_STATUS_FAIL, payload: error });
     console.log(error);
+  }
+};
+
+export const submitFeedback = (id, feedback) => async (dispatch) => {
+  try {
+    dispatch({ type: SUBMIT_FEEDBACK_REQUEST });
+
+    const { data } = await axios.put(`/order/feedback/${id}`, { feedback });
+    dispatch({ type: SUBMIT_FEEDBACK_SUCCESS, payload: { id, feedback: data.feedback } });
+    dispatch(setAlert("Feedback submitted", "success"));
+  } catch (error) {
+    dispatch({ type: SUBMIT_FEEDBACK_FAIL, payload: error });
+    console.log(error);
+    dispatch(setAlert("Error submitting feedback", "danger"));
   }
 };

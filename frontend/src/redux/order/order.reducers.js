@@ -17,6 +17,9 @@ import {
   SET_PAYMENT_STATUS_REQUEST,
   SET_PAYMENT_STATUS_SUCCESS,
   SET_PAYMENT_STATUS_FAIL,
+  SUBMIT_FEEDBACK_REQUEST,
+  SUBMIT_FEEDBACK_SUCCESS,
+  SUBMIT_FEEDBACK_FAIL,
 } from "./order.types";
 
 const initialState = {
@@ -36,6 +39,7 @@ export default function (state = initialState, action) {
     case CONFIRM_ORDER_REQUEST:
     case SET_PAYMENT_TYPE_REQUEST:
     case SET_PAYMENT_STATUS_REQUEST:
+    case SUBMIT_FEEDBACK_REQUEST:
       return { ...state, loading: true };
     case PLACE_ORDER_SUCCESS:
       return { ...state, orders: [...state.orders, payload], loading: false };
@@ -43,26 +47,52 @@ export default function (state = initialState, action) {
     case GET_MY_ORDERS_SUCCESS:
       return { ...state, orders: payload, loading: false };
     case CONFIRM_ORDER_SUCCESS:
-      const indexConfirm = state.orders.findIndex((i) => i._id === payload.id);
-      const newOrderConfirm = [...state.orders];
-      newOrderConfirm[indexConfirm].isConfirmed = payload.isConfirmed;
-      return { ...state, orders: newOrderConfirm, loading: false };
+      return {
+        ...state,
+        orders: state.orders.map((order) =>
+          order._id === payload.id
+            ? { ...order, isConfirmed: payload.isConfirmed, rejectionReason: payload.rejectionReason }
+            : order
+        ),
+        loading: false,
+      };
     case SET_PAYMENT_TYPE_SUCCESS:
-      const indexType = state.orders.findIndex((i) => i._id === payload.id);
-      const newOrderType = [...state.orders];
-      newOrderType[indexType].paymentType = payload.paymentType;
-      return { ...state, orders: newOrderType, loading: false };
+      return {
+        ...state,
+        orders: state.orders.map((order) =>
+          order._id === payload.id
+            ? { ...order, paymentType: payload.paymentType }
+            : order
+        ),
+        loading: false,
+      };
     case SET_PAYMENT_STATUS_SUCCESS:
-      const indexStatus = state.orders.findIndex((i) => i._id === payload._id);
-      const newOrderStatus = [...state.orders];
-      newOrderStatus[indexStatus].paymentStatus = true;
-      return { ...state, orders: newOrderStatus, loading: false };
+      return {
+        ...state,
+        orders: state.orders.map((order) =>
+          order._id === payload.id
+            ? { ...order, paymentStatus: true }
+            : order
+        ),
+        loading: false,
+      };
+    case SUBMIT_FEEDBACK_SUCCESS:
+      return {
+        ...state,
+        orders: state.orders.map((order) =>
+          order._id === payload.id
+            ? { ...order, feedback: payload.feedback }
+            : order
+        ),
+        loading: false,
+      };
     case PLACE_ORDER_FAIL:
     case GET_ADMIN_ORDER_FAIL:
     case GET_MY_ORDERS_FAIL:
     case CONFIRM_ORDER_FAIL:
     case SET_PAYMENT_STATUS_FAIL:
     case SET_PAYMENT_TYPE_FAIL:
+    case SUBMIT_FEEDBACK_FAIL:
       return { ...state, loading: false, error: payload };
     default:
       return state;

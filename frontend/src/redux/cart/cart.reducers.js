@@ -2,6 +2,7 @@ import {
   ADD_TO_CART,
   CLEAR_ITEM_FROM_CART,
   REMOVE_FROM_CART,
+  CLEAR_CART,
 } from "./cart.types";
 
 import { removeFromCart, addToCart } from "./cart.utils";
@@ -43,6 +44,14 @@ export default function (state = initialState, action) {
           state.totalQuantity -
           state.cartItems.filter((cartItem) => cartItem._id === payload)[0]
             .quantity,
+      };
+    }
+    case CLEAR_CART: {
+      localStorage.removeItem("cartItems");
+      return {
+        ...state,
+        cartItems: [],
+        totalQuantity: 0,
       };
     }
     default: {

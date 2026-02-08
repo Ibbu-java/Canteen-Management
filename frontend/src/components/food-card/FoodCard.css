@@ -1,19 +1,21 @@
 .food-card {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  position: "relative";
+  position: relative;
   border-radius: 10px;
 }
 .food-card img {
-  height: 200px;
+  height: 170px;
   width: 100%;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  object-fit: contain;
+  background-color: white;
 }
 
 .food-headers {
   display: flex;
   justify-content: space-between;
-  padding: 20px 10px;
+  padding: 10px 10px 5px 10px;
   align-items: center;
 }
 
@@ -38,22 +40,20 @@
 }
 
 .food-card-button {
-  margin: 20px 10px;
-  position: absolute;
-  display: block;
+  margin: 5px 10px 15px 10px;
   border: none;
-  padding: 10px 30px;
-  font-size: 17px;
+  padding: 10px 0;
+  font-size: 16px;
   color: white;
   border-radius: 30px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-  transform: translateY(-120%) translateX(80%);
-  width: 10%;
+  width: calc(100% - 20px);
   background: #ff2a2a;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .accept {
