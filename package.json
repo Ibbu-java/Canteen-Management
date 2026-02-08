@@ -7,10 +7,12 @@
     "node": ">=14.x"
   },
   "scripts": {
+    "start": "node server.js",
+    "dev": "concurrently \"npm run server\" \"npm run frontend\"",
     "frontend": "cd frontend && npm start",
-    "start": "concurrently \"npm run server\" \"npm run frontend\"",
     "server": "nodemon server.js",
     "setup": "cd frontend && npm install",
+    "build": "cd frontend && npm install && npm run build",
     "populate": "node populate-food-data.js"
   },
   "keywords": [
