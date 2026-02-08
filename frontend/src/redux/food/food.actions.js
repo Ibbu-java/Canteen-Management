@@ -72,7 +72,7 @@ export const editFoodItem = (foodData, id, history) => async (dispatch) => {
     dispatch({ type: EDIT_FOOD_ITEM_REQUEST });
     
     // Axios automatically sets Content-Type to multipart/form-data when data is FormData
-    const { data } = await axios.put(`/edit/${id}`, foodData);
+    const { data } = await axios.put(`/api/edit/${id}`, foodData);
     
     dispatch({ type: EDIT_FOOD_ITEM_SUCCESS, payload: data });
     dispatch(setAlert("Edit food done", "success"));

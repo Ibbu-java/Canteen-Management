@@ -29,7 +29,7 @@ export const placeOrder = (formData, history) => async (dispatch) => {
   try {
     dispatch({ type: PLACE_ORDER_REQUEST });
 
-    const { data } = await axios.post("/place/order", formData);
+    const { data } = await axios.post("/api/place/order", formData);
 
     dispatch({ type: PLACE_ORDER_SUCCESS, data: data });
     dispatch(clearCart());
@@ -129,7 +129,7 @@ export const setpaymentStatus = (id, history) => async (dispatch) => {
   try {
     dispatch({ type: SET_PAYMENT_STATUS_REQUEST });
 
-    const { data } = await axios.put(`/payment-status/${id}`);
+    const { data } = await axios.put(`/api/payment-status/${id}`);
     dispatch({ type: SET_PAYMENT_STATUS_SUCCESS, payload: { data, id } });
     dispatch(setAlert("Payment done", "success"));
     // window.location.reload();

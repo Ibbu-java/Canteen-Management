@@ -16,7 +16,7 @@ const RazorpayButton = ({ order, user, setAlert, onSuccess }) => {
 
       const body = JSON.stringify({ amount: order.totalPrice });
       const { data: razorpayOrder } = await axios.post(
-        "/payment/create-order",
+        "/api/payment/create-order",
         body,
         config
       );
@@ -39,7 +39,7 @@ const RazorpayButton = ({ order, user, setAlert, onSuccess }) => {
               db_order_id: order._id,
             });
 
-            await axios.post("/payment/verify-payment", verifyBody, config);
+            await axios.post("/api/payment/verify-payment", verifyBody, config);
             
             setAlert("Payment Successful", "success");
             if (onSuccess) onSuccess();
