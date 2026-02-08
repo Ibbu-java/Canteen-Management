@@ -14,7 +14,13 @@ require("dotenv").config();
 // connectDB();
 app.use(express.json({ extended: false }));
 
-app.use(cors());
+const corsOptions = {
+  origin: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true,
+};
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 app.use("/api", require("./routes/auth.routes"));
 app.use("/api", require("./routes/food.routes"));
