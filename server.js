@@ -16,10 +16,10 @@ app.use(express.json({ extended: false }));
 
 app.use(cors());
 
-app.use(require("./routes/auth.routes"));
-app.use(require("./routes/food.routes"));
-app.use(require("./routes/order.routes"));
-app.use(require("./routes/payment.routes"));
+app.use("/api", require("./routes/auth.routes"));
+app.use("/api", require("./routes/food.routes"));
+app.use("/api", require("./routes/order.routes"));
+app.use("/api", require("./routes/payment.routes"));
 
 const PORT = process.env.PORT || 5000;
 

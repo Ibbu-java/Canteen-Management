@@ -55,7 +55,7 @@ export const getAdminORders = () => async (dispatch) => {
   try {
     dispatch({ type: GET_ADMIN_ORDER_REQUEST });
 
-    const { data } = await axios.get("/orders");
+    const { data } = await axios.get("/api/orders");
     console.log(data);
     dispatch({ type: GET_ADMIN_ORDER_SUCCESS, payload: data.data });
   } catch (error) {
@@ -68,7 +68,7 @@ export const confirmOrder = (id, isConfirmed, history, rejectionReason) => async
   try {
     dispatch({ type: CONFIRM_ORDER_REQUEST });
 
-    const { data } = await axios.put(`/orders/${id}`, {
+    const { data } = await axios.put(`/api/orders/${id}`, {
       isConfirmed,
       rejectionReason
     });
@@ -97,7 +97,7 @@ export const getMyOrders = () => async (dispatch) => {
   try {
     dispatch({ type: GET_MY_ORDERS_REQUEST });
 
-    const { data } = await axios.get(`/myorders`);
+    const { data } = await axios.get(`/api/myorders`);
     dispatch({ type: GET_MY_ORDERS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: GET_MY_ORDERS_FAIL, payload: error });
@@ -110,7 +110,7 @@ export const setpaymentType =
     try {
       dispatch({ type: SET_PAYMENT_TYPE_REQUEST });
 
-      const { data } = await axios.put(`/order/payment-type/${id}`, {
+      const { data } = await axios.put(`/api/order/payment-type/${id}`, {
         paymentType,
       });
       dispatch({
@@ -144,7 +144,7 @@ export const submitFeedback = (id, feedback) => async (dispatch) => {
   try {
     dispatch({ type: SUBMIT_FEEDBACK_REQUEST });
 
-    const { data } = await axios.put(`/order/feedback/${id}`, { feedback });
+    const { data } = await axios.put(`/api/order/feedback/${id}`, { feedback });
     dispatch({ type: SUBMIT_FEEDBACK_SUCCESS, payload: { id, feedback: data.feedback } });
     dispatch(setAlert("Feedback submitted", "success"));
   } catch (error) {

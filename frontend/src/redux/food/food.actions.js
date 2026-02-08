@@ -23,7 +23,7 @@ export const addFoodItem = (foodData, history) => async (dispatch) => {
     dispatch({ type: ADD_FOOD_REQUEST });
 
     // Axios automatically sets Content-Type to multipart/form-data when data is FormData
-    const { data } = await axios.post("/add", foodData);
+    const { data } = await axios.post("/api/add", foodData);
 
     dispatch({ type: ADD_FOOD_SUCCESS, payload: data });
     dispatch(setAlert("Added food successfully", "success"));
@@ -47,7 +47,7 @@ export const getAllFoodItems = (category) => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_FOOD_ITEMS_REQUEST });
 
-    const { data } = await axios.get(`/food/${category}`);
+    const { data } = await axios.get(`/api/food/${category}`);
 
     dispatch({ type: GET_ALL_FOOD_ITEMS_SUCCESS, payload: data.data });
   } catch (error) {
@@ -59,7 +59,7 @@ export const getAllFoodItems = (category) => async (dispatch) => {
 export const getSingleFoodItem = (id) => async (dispatch) => {
   try {
     dispatch({ type: GET_SINGLE_FOOD_ITEM_REQUEST });
-    const { data } = await axios.get(`/food-item/${id}`);
+    const { data } = await axios.get(`/api/food-item/${id}`);
     dispatch({ type: GET_SINGLE_FOOD_ITEM_SUCCESS, payload: data });
   } catch (error) {
     console.log(error);
@@ -95,7 +95,7 @@ export const editFoodItem = (foodData, id, history) => async (dispatch) => {
 export const deleteFoodItem = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_FOOD_ITEM_REQUEST });
-    await axios.delete(`/delete/${id}`);
+    await axios.delete(`/api/delete/${id}`);
 
     dispatch({ type: DELETE_FOOD_ITEM_SUCCESS, payload: id });
     dispatch(setAlert("Item deleted successfully", "success"));
