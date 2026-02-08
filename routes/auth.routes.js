@@ -10,10 +10,11 @@ const router = express.Router();
 // Helper to map User for frontend
 const mapUser = (user) => {
     if(!user) return null;
+    const { password, is_admin, id, ...rest } = user;
     return {
-        ...user,
-        isAdmin: user.is_admin,
-        _id: user.id // For frontend compatibility if needed
+        ...rest,
+        isAdmin: is_admin,
+        _id: id
     };
 }
 
@@ -142,10 +143,8 @@ router.post(
           .json({ errors: [{ msg: "Email does not exist" }] });
       }
 
-      const user = mapUser(userRaw);
-
       // check password
-      const isMatch = await bcrypt.compare(password, user.password);
+      const isMatch = await bcrypt.compare(password, userRaw.password);
 
       if (!isMatch) {
         return res
@@ -166,7 +165,7 @@ router.post(
         { expiresIn: "5 days" },
         (err, token) => {
           if (err) throw err;
-          res.json({ token });
+          res.json({ token, user: mapUser(userRaw) });
         }
       );
     } catch (error) {

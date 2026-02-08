@@ -22,7 +22,7 @@ const Navbar = ({
 
   const LoggedInUser = (
     <div>
-      <Link to="/signin" className="link">
+      <Link to="/" className="link">
         Home
       </Link>
       <Link to="/cart" className="link">
@@ -40,7 +40,7 @@ const Navbar = ({
   );
   const LoggedInAdmin = (
     <div>
-      <Link to="/signin" className="link">
+      <Link to="/" className="link">
         Home
       </Link>
       <Link to="/add-food" className="link">

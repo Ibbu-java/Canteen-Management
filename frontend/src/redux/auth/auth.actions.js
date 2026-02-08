@@ -98,6 +98,7 @@ export const loginUser = (formData) => async (dispatch) => {
       type: SIGNIN_SUCCESS,
       payload: res.data,
     });
+    setAuthToken(res.data.token);
 
     dispatch(loadUser());
     dispatch(setAlert("Signed In  successfully", "success"));
