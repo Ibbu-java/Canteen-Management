@@ -18,7 +18,7 @@ const SignUpPage = ({ registerUser, isAuthenticated, setAlert }) => {
     role: "",
   });
 
-  const { name, email, password, confirmPassword, branch, role } = formData;
+  const { name, email, password, confirmPassword, branch } = formData;
 
   React.useEffect(() => {
     if (branch === "Administration" || branch === "Library") {
