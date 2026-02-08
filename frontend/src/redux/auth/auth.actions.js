@@ -91,7 +91,7 @@ export const loginUser = (formData) => async (dispatch) => {
     });
 
     // Make a request to backend API
-    const res = await axios.post("/api/signin", formData, config);
+    const res = await axios.get("/api/signin", formData, config);
 
     // If no errors, dispatch LOGIN_SUCCESS
     dispatch({
