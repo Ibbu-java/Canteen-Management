@@ -29,7 +29,7 @@ const initialState = {
   error: "",
 };
 
-export default function (state = initialState, action) {
+export default function orderReducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
