@@ -8,8 +8,10 @@ import "./Dashboard.css";
 
 const Dashboard = ({ getAdminORders, user, loading }) => {
   useEffect(() => {
-    getAdminORders();
-  }, [getAdminORders]);
+    if (user?.isAdmin) {
+      getAdminORders();
+    }
+  }, [getAdminORders, user?.isAdmin]);
 
   return (
     <div>
